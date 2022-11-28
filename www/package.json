@@ -1,0 +1,39 @@
+{
+  "name": "Puzzlip",
+  "version": "0.1.0",
+  "description": "Fun puzzle written in rust",
+  "main": "index.js",
+  "bin": {
+    "build-wasm": ".bin/build-wasm.js"
+  },
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lnenad/puzzlip"
+  },
+  "keywords": [
+    "webassembly",
+    "wasm",
+    "rust",
+    "puzzle"
+  ],
+  "author": "Nenad Lukic <nenadspp@gmail.com>",
+  "license": "(MIT OR Apache-2.0)",
+  "bugs": {
+    "url": "https://github.com/lnenad/puzzlip/issues"
+  },
+  "homepage": "https://github.com/lnenad/puzzlip",
+  "dependencies": {
+    "puzzler": "file:../pkg"
+  },
+  "devDependencies": {
+    "hello-wasm-pack": "^0.1.0",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5",
+    "copy-webpack-plugin": "^5.0.0"
+  }
+}

@@ -1,0 +1,42 @@
+.difficultyContainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ffb300;
+    border-radius: 10px;
+    padding: 2px 10px;
+}
+
+#canvasContainer {
+    margin: auto;
+    grid-column: 1 / 4;
+}
+
+.controlsContainer {
+    display: flex;
+}
+
+.startGameContainer {
+    width: 100%;
+}
+
+.controlsContainer div {
+    margin: 20px;
+}
+
+#newPuzzle, #reshuffle {
+    width: 100%;
+}
+
+.scoreContainer {
+    padding: 20px;
+}
+
+.categories {
+    height: 40px;
+}
+
+canvas {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */  
+}
