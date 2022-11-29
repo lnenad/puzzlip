@@ -14,6 +14,10 @@
 
 This is a relatively simple puzzle generator application written in Rust and used via Javascript in https://puzzlip.com. If you like the game or use the code please consider [buying me a coffee](https://www.buymeacoffee.com/lnenad)
 
+#### Disclaimer
+
+This was made to learn/practice both Rust and wasm so the code quality is definitely subpar with a lot of room for improvements/optimizations. Looking forward to PRs that improve the codebase. 
+
 ## Technical overview
 
 The application works by loading an image from a remote URL, loading it in memory using the `image` crate, taking the difficulty multiplier and generating a square grid of image pieces. The grid is sent back to Javascript. When a user clicks on a field, either left or right, the click location,relative to the canvas, is sent back to Rust and the clicked piece is rotated to it's correct position, again, using the `image` crate. The data that is transferred Rust <> Javascript is encoded using `serde_wasm_bindgen`.  

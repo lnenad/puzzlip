@@ -1,10 +1,8 @@
 use image::DynamicImage;
-use image::GenericImageView;
 use crate::puzzler::{puzzlerize, Piece};
 use serde::{Serialize, Deserialize};
 
-#[derive(Serialize, Deserialize)]
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Grid {
     pub segments: Vec<GridSegment>,
     pub gx: u32,
@@ -12,10 +10,10 @@ pub struct Grid {
     pub w: u32,
     pub h: u32,
     pub difficulty: u32,
+    pub image_url: String
 }
 
-#[derive(Serialize, Deserialize)]
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct GridSegment {
     pub x: f64,
     pub y: f64,
@@ -25,9 +23,9 @@ pub struct GridSegment {
     pub idx: u32
 }
 
-pub fn generate_grid(img: &DynamicImage, difficulty: u32, w: u32, h: u32, cx: u32, cy: u32) -> Grid {
+pub fn generate_grid(image_url: String,img: &DynamicImage, difficulty: u32, w: u32, h: u32, cx: u32, cy: u32) -> Grid {
     let (puzzle, gx, gy) = puzzlerize(&img, cx, cy);
-    let mut grid = Grid{segments: Vec::new(), w, h, difficulty, gx: gx, gy: gy};
+    let mut grid = Grid{image_url, segments: Vec::new(), w, h, difficulty, gx: gx, gy: gy};
 
     let mut iter = puzzle.into_iter().enumerate();
     for i in 0..gx {

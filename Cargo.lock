@@ -834,6 +834,7 @@ dependencies = [
  "reqwest",
  "serde",
  "serde-wasm-bindgen",
+ "url",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "wasm-bindgen-test",

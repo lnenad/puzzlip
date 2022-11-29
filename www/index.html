@@ -11,10 +11,10 @@
     <header>
       <nav>
         <a href="/">Home</a>
-        <a href="/about">About</a>
+        <a href="#" id="about">About</a>
         <a href="https://github.com/lnenad/puzzlip">Source Code</a>      
       </nav>
-      <h1>Puzzler</h1>
+      <h1>Puzzlip</h1>
       <nav class="categories">
         <a href="#" id="catsCategory">Cats</a>
         <a href="#" id="dogsCategory">Dogs</a>
@@ -23,15 +23,31 @@
         <a href="#" id="nsfwCategory">NSFW</a>      
       </nav>
     </header>
+    <article id="intro">
+      <p>
+        Welcome to Puzzlip, it's a simple, relaxing, puzzle generator. 
+        <kbd>Left click</kbd> and <kbd>Right click</kbd> rotate the pieces.
+        Feel free to click on the categories on the top to change the type of images you're getting.
+        Change the difficulty on the bottom to challenge yourself. If you want to load a custom image
+        you can click on <u>Load a custom image</u> and enter any URL that is publicly available.
+        <br><br>Click <a href="#" id="closeIntro">here</a> to close this notification. 
+        Clicking on <u>About</u> will show it.
+      </p>
+    </article>
     <div id="canvasContainer"></div>
     <div class="controlsContainer">
       <div class="difficultyContainer">
         <span>Difficulty</span>
-        <input type="range" min="1" max="5" value="3" iD="difficulty">
+        <div>
+          Easy
+          <input type="range" min="1" max="5" value="3" id="difficulty">
+          Hard
+        </div>
       </div>
       <div class="startGameContainer">
         <button id="reshuffle">Reshuffle</button>
         <button id="newPuzzle">New puzzle</button>
+        <button id="customImage">Load a custom image</button>
       </div>
     </div>
     <div class="scoreContainer">

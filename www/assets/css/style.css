@@ -19,11 +19,17 @@
     width: 100%;
 }
 
-.controlsContainer div {
+.controlsContainer > div {
     margin: 20px;
 }
 
-#newPuzzle, #reshuffle {
+.controlsContainer > div > div {
+    display: flex;
+    font-size: 0.75em;
+    margin-top: 10px;
+}
+
+#newPuzzle, #reshuffle, #customImage {
     width: 100%;
 }
 
@@ -33,6 +39,24 @@
 
 .categories {
     height: 40px;
+}
+
+#intro {
+    margin-top: 15px;
+}
+
+#intro > p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+.hidden {
+    display: none !important;
+}
+
+nav > a.active {
+    border: 1px solid #267fff !important;
+    color: #267fff !important;
 }
 
 canvas {
