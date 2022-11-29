@@ -4,6 +4,7 @@ let selectedCategory = "cats";
 let loadedImage = null;
 let playable = false;
 let timer = null;
+let timeInterval = null;
 let moves = 0;
 let score = 0;
 
@@ -34,6 +35,7 @@ const newPuzzle = async (image) => {
 
   playable = true;
   timer = Date.now();
+  startTimer();
   moves = 0;
   score = 0;
 
@@ -67,6 +69,7 @@ const newPuzzle = async (image) => {
       alert(`You won after ${(Date.now() - timer) / 1000} seconds.`);
       timer = null;
       playable = false;
+      stopTimer();
     }
   };
 
@@ -91,6 +94,21 @@ const customImage = () => {
     alert("Invalid URL provided");
   }
 };
+
+const startTimer = () => {
+  timeInterval = setInterval(timerStep, 1000);
+}
+
+const timerStep = () => {
+  const elapsed = Math.round((Date.now() - timer) / 1000);
+  const seconds = String(Math.round(elapsed % 60)).padStart(2, "0");
+  const minutes = String(Math.floor(elapsed / 60)).padStart(2, "0");
+  document.getElementById("time").innerText = `${minutes}:${seconds}`;
+}
+
+const stopTimer = () => {
+  clearInterval(timeInterval);
+}
 
 const showIntro = () => {
   localStorage.setItem("closedIntro", "false");
