@@ -27,22 +27,22 @@ pub struct Piece {
     pub current_rotation: u32,
 }
 
-pub fn puzzlerize(img: &DynamicImage, cx: u32, cy: u32) -> (Vec<Piece>, u32, u32) {
+pub fn puzzlerize(img: &DynamicImage, cx: u32, cy: u32) -> (Vec<Piece>, u32, u32, u32) {
     let (w, h) = img.dimensions();
     let copy = img.clone();
 
     let (gx, gy) = get_grid_dimensions(w, h, cx, cy);
     println!("Piece dimensions: {} {}", gx, gy);
-    let pieces = get_pieces(copy, gx, gy, cx, cy);
+    let (pieces, ideal_moves) = get_pieces(copy, gx, gy, cx, cy);
 
-    (pieces, gx, gy)
+    (pieces, gx, gy, ideal_moves)
 }
 
-fn get_pieces(mut img: DynamicImage, gx: u32, gy: u32, cx: u32, cy: u32) -> Vec<Piece> {
+fn get_pieces(mut img: DynamicImage, gx: u32, gy: u32, cx: u32, cy: u32) -> (Vec<Piece>, u32) {
     let mut v = vec![];
     let mut rng = thread_rng();
     let side = Uniform::new(1, 3);
-
+    let mut ideal_moves = 0;
     for i in 0..gx {
         for j in 0..gy {
             let i = img.crop(i * cx, j * cy, cx, cy);
@@ -63,10 +63,15 @@ fn get_pieces(mut img: DynamicImage, gx: u32, gy: u32, cx: u32, cy: u32) -> Vec<
                 dh,
                 current_rotation: r,
             };
+            ideal_moves += if r == 3 {
+                1
+            } else {
+                r
+            };
             v.push(piece);
         }
     }
-    v
+    (v, ideal_moves)
 }
 
 pub fn rotate_piece(p: &Piece, direction: &String) -> (Piece, DynamicImage) {

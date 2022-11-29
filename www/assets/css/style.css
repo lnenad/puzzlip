@@ -34,7 +34,13 @@
 }
 
 .scoreContainer {
-    padding: 20px;
+    padding: 30px;
+    text-align: center;
+}
+
+.scoreContainer > span {
+    display: inline-block;
+    margin-left: 10px;
 }
 
 .categories {

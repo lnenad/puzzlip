@@ -4,6 +4,8 @@ let selectedCategory = "cats";
 let loadedImage = null;
 let playable = false;
 let timer = null;
+let moves = 0;
+let score = 0;
 
 // 1 easiest ; 5 hardest
 const newPuzzle = async (image) => {
@@ -24,7 +26,7 @@ const newPuzzle = async (image) => {
   );
   loadedImage = grid.image_url;
 
-  console.log(typeof grid, grid);
+  console.log(grid);
 
   if (grid.message && grid.message.includes("error sending request")) {
     return alert("Error while trying to get image");
@@ -32,12 +34,18 @@ const newPuzzle = async (image) => {
 
   playable = true;
   timer = Date.now();
+  moves = 0;
+  score = 0;
+
+  document.getElementById("idealMoves").innerText = grid.ideal_moves;
 
   const clickHandler = (direction, event) => {
     event.preventDefault();
     if (!playable) {
       return false;
     }
+
+    moves += 1;
     const boundingRect = canvas.getBoundingClientRect();
 
     const scaleX = canvas.width / boundingRect.width;
@@ -53,6 +61,7 @@ const newPuzzle = async (image) => {
       canvasClickTop
     );
     grid.segments[result.segment.idx] = result.segment;
+    document.getElementById("moves").innerText = moves;
 
     if (result.completed) {
       alert(`You won after ${(Date.now() - timer) / 1000} seconds.`);

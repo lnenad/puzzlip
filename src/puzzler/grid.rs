@@ -9,6 +9,7 @@ pub struct Grid {
     pub gy: u32,
     pub w: u32,
     pub h: u32,
+    pub ideal_moves: u32,
     pub difficulty: u32,
     pub image_url: String
 }
@@ -24,8 +25,8 @@ pub struct GridSegment {
 }
 
 pub fn generate_grid(image_url: String,img: &DynamicImage, difficulty: u32, w: u32, h: u32, cx: u32, cy: u32) -> Grid {
-    let (puzzle, gx, gy) = puzzlerize(&img, cx, cy);
-    let mut grid = Grid{image_url, segments: Vec::new(), w, h, difficulty, gx: gx, gy: gy};
+    let (puzzle, gx, gy, ideal_moves) = puzzlerize(&img, cx, cy);
+    let mut grid = Grid{image_url, segments: Vec::new(), w, h, difficulty, gx: gx, gy: gy, ideal_moves};
 
     let mut iter = puzzle.into_iter().enumerate();
     for i in 0..gx {
