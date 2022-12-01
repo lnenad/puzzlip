@@ -8,6 +8,8 @@ let timeInterval = null;
 let moves = 0;
 let score = 0;
 let lastCorrectMove = null;
+let scoreTable = {};
+
 const scoring = {
   0: 4,
   1: 4,
@@ -20,7 +22,6 @@ const scoring = {
   8: 2,
   9: 2,
 };
-let scoreTable = {};
 
 const storedSettings = {
   animate:
@@ -44,12 +45,21 @@ if (storedSettings.difficulty !== undefined) {
   document.getElementById("difficulty").setAttribute("value", storedSettings.difficulty);
 }
 
+const resetState = () => {
+  playable = false
+  timer = null
+  timeInterval = null
+  moves = 0
+  score = 0
+  lastCorrectMove = null
+  scoreTable = {};
+  document.getElementById("score").innerText = score;
+  document.getElementById("moves").innerText = moves;
+}
+
 // 1 easiest ; 5 hardest
 const newPuzzle = async (image) => {
-  moves = 0;
-  score = 0;
-  lastCorrectMove = null;
-  scoreTable = {};
+  resetState();
 
   const canvasContainer = document.getElementById("canvasContainer");
   canvasContainer.classList.add("loading");

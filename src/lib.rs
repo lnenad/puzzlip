@@ -148,8 +148,12 @@ pub async fn puzzle_me(category: String, difficulty: u32, image: String, animate
         .map_err(|_| ())
         .unwrap();
 
-    canvas.set_width(w);
-    canvas.set_height(h);
+    // Since the puzzler alg will slice of a portion of the image depending on the 
+    // difficulty we need to calculate the actual dimensions
+    let final_width = grid.gx * cx;
+    let final_height = grid.gy * cy;
+    canvas.set_width(final_width);
+    canvas.set_height(final_height);
 
     let context = canvas
         .get_context("2d")
