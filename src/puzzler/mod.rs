@@ -41,7 +41,7 @@ pub fn puzzlerize(img: &DynamicImage, cx: u32, cy: u32) -> (Vec<Piece>, u32, u32
 fn get_pieces(mut img: DynamicImage, gx: u32, gy: u32, cx: u32, cy: u32) -> (Vec<Piece>, u32) {
     let mut v = vec![];
     let mut rng = thread_rng();
-    let side = Uniform::new(1, 3);
+    let side = Uniform::new(1, 4);
     let mut ideal_moves = 0;
     for i in 0..gx {
         for j in 0..gy {

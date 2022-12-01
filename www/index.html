@@ -2,9 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Puzzler</title>
+    <title>Puzzlip - The funnest puzzler on the internet</title>
+    <meta name="description" content="Solve puzzles and brag about your score. Create puzzles from any widely available image on the internet."/>
+    <meta name="author" content="https://github.com/lnenad"/>
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="manifest" href="assets/site.webmanifest">
   </head>
   <body>
     <noscript>Please enable javascript in your browser.</noscript>
@@ -14,7 +20,7 @@
         <a href="#" id="about">About</a>
         <a href="https://github.com/lnenad/puzzlip">Source Code</a>      
       </nav>
-      <h1>Puzzlip</h1>
+      <h1><img style="width: 50px;" src="assets/logo.png" alt="Puzzlip Logo" /> Puzzlip</h1>
       <nav class="categories">
         <a href="#" id="catsCategory">Cats</a>
         <a href="#" id="dogsCategory">Dogs</a>
@@ -34,7 +40,7 @@
         Clicking on <u>About</u> will show it.
       </p>
     </article>
-    <div id="canvasContainer"></div>
+    <div id="canvasContainer" class="loading transitionsNicely"></div>
     <div class="scoreContainer">
       <span>Moves:</span>
       <mark id="moves">0</mark>
@@ -43,24 +49,85 @@
       <mark id="idealMoves">0</mark>
 
       <span>Score:</span>
-      <mark>0</mark>
+      <mark id="score">0</mark>
       
       <span>Time:</span>
       <mark id="time">00:00</mark>
     </div>
-    <div class="controlsContainer">
+    <div id="controlsContainer" class="controlsContainer">
+      <div id="dragHandler" style="display: none;" title="Click anywhere to drag"></div>
       <div class="difficultyContainer">
+        Configuration
         <span>Difficulty</span>
         <div>
           Easy
           <input type="range" min="1" max="5" value="3" id="difficulty">
           Hard
         </div>
+        <div class="animateCheckbox">
+          <label class="switch">
+            <input id="animate" type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
+          &nbsp; Animate puzzle
+        </div>
+        <button id="openFullscreen">Open fullscreen</button>
+        <button id="closeFullscreen" style="display: none;">Close fullscreen</button>
       </div>
       <div class="startGameContainer">
         <button id="reshuffle">Reshuffle</button>
         <button id="newPuzzle">New puzzle</button>
         <button id="customImage">Load a custom image</button>
+      </div>
+    </div>
+    <div id="resultsModal" class="modal">
+      <div class="modal__overlay" id="resultsModalOverlay"></div>
+      <div class="modal__container">
+        <h2>Congratulations</h2>
+        <p>You have successfully completed the puzzle.</p>
+        <div class="scoreContainer">
+          <span>Moves:</span>
+          <mark id="resultMoves">0</mark>
+        
+          <span>Score:</span>
+          <mark id="resultScore">0</mark>
+          
+          <span>Time:</span>
+          <mark id="resultTime">00:00</mark>
+        </div>
+        <button class="modal__close" id="resultsModalClose">&#10005;</button>
+      </div>
+    </div>
+    <div id="celebration" class="snowflakes" style="display: none;">
+      <div class="snowflake">
+      🎉
+      </div>
+      <div class="snowflake">
+     🎉
+      </div>
+      <div class="snowflake">
+     🎉
+      </div>
+      <div class="snowflake">
+      🎉
+      </div>
+      <div class="snowflake">
+      🎉
+      </div>
+      <div class="snowflake">
+      🎉
+      </div>
+      <div class="snowflake">
+      🎉
+      </div>
+      <div class="snowflake">
+      🎉
+      </div>
+      <div class="snowflake">
+      🎉
+      </div>
+      <div class="snowflake">
+      🎉
       </div>
     </div>
     <footer>

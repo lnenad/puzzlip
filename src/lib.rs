@@ -17,6 +17,8 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::Clamped;
 use wasm_bindgen::JsCast;
 use web_sys::ImageData;
+use futures::channel::oneshot;
+use std::time::Duration;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -45,6 +47,7 @@ extern "C" {
 struct ClickResult {
     pub completed: bool,
     pub segment: Option<GridSegment>,
+    pub correct_move: bool,
 }
 
 pub fn get_image_url(category: String) -> &'static str {
@@ -108,7 +111,7 @@ pub fn get_image_url(category: String) -> &'static str {
 }
 
 #[wasm_bindgen]
-pub async fn puzzle_me(category: String, difficulty: u32, image: String) -> JsValue {
+pub async fn puzzle_me(category: String, difficulty: u32, image: String, animate: bool) -> JsValue {
     panic::set_hook(Box::new(console_error_panic_hook::hook));
 
     let client = reqwest::Client::new();
@@ -166,6 +169,10 @@ pub async fn puzzle_me(category: String, difficulty: u32, image: String) -> JsVa
                 ImageData::new_with_u8_clamped_array_and_sh(Clamped(&img_bytes), gs.w, gs.h)
                     .unwrap();
 
+            if animate {
+                sleep(1).await;
+            }
+
             context.put_image_data(&image_data_temp, gs.x, gs.y);
         }
     }
@@ -199,6 +206,7 @@ pub fn rotate_segment(
     let mut result: ClickResult = ClickResult {
         completed: true,
         segment: None,
+        correct_move: false
     };
 
     for (idx, mut segment) in &mut grid_enum {
@@ -222,6 +230,7 @@ pub fn rotate_segment(
             if rotated_piece.current_rotation != 0 {
                 result.completed = false;
             }
+            result.correct_move = rotated_piece.current_rotation == 0;
             result.segment = Some(GridSegment {
                 x: segment.x,
                 y: segment.y,
@@ -238,4 +247,16 @@ pub fn rotate_segment(
     }
 
     return serde_wasm_bindgen::to_value(&result).unwrap();
+}
+
+#[wasm_bindgen]
+pub async fn sleep(delay: i32) {
+    let mut cb = |resolve: js_sys::Function, reject: js_sys::Function| {
+        web_sys::window()
+            .unwrap()
+            .set_timeout_with_callback_and_timeout_and_arguments_0(&resolve, delay);};
+
+    let p = js_sys::Promise::new(&mut cb);
+
+    wasm_bindgen_futures::JsFuture::from(p).await.unwrap();
 }
