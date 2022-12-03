@@ -1,8 +1,7 @@
 extern crate console_error_panic_hook;
 mod puzzler;
-mod utils;
 
-use std::panic;
+use std::{panic, vec};
 
 use crate::puzzler::grid::generate_grid;
 use crate::puzzler::rotate_piece;
@@ -17,8 +16,6 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::Clamped;
 use wasm_bindgen::JsCast;
 use web_sys::ImageData;
-use futures::channel::oneshot;
-use std::time::Duration;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -99,6 +96,18 @@ pub fn get_image_url(category: String) -> &'static str {
                 "https://i.imgur.com/jQi5zPd.jpg",
             ]
         }
+        "nsfw" => {
+            vec![
+                "https://i.imgur.com/Z3WQAmH.jpg",
+                "https://i.imgur.com/ECvNo2d.jpg",
+                "https://i.imgur.com/bWGqAwa.jpg",
+                "https://i.imgur.com/7FmjlJe.jpg",
+                "https://i.imgur.com/WicCEQX.jpg",
+                "https://i.imgur.com/rFxKIIO.jpg",
+                "https://i.imgur.com/1tZr1iu.jpg",
+                "https://i.imgur.com/dwuTL7d.jpg"
+            ]
+        }
         _ => {
             // Default to cats
             vec!["https://i.imgur.com/7LEH4Pc.png"]
@@ -177,7 +186,7 @@ pub async fn puzzle_me(category: String, difficulty: u32, image: String, animate
                 sleep(1).await;
             }
 
-            context.put_image_data(&image_data_temp, gs.x, gs.y);
+            context.put_image_data(&image_data_temp, gs.x, gs.y).unwrap();
         }
     }
 
@@ -213,7 +222,7 @@ pub fn rotate_segment(
         correct_move: false
     };
 
-    for (idx, mut segment) in &mut grid_enum {
+    for (idx, segment) in &mut grid_enum {
         if click_x > segment.x && click_y > segment.y // Check collision
             && click_x < segment.x + (segment.w as f64) && click_y < segment.y + (segment.h as f64)
         {
@@ -228,9 +237,8 @@ pub fn rotate_segment(
             )
             .unwrap();
 
-            context.put_image_data(&image_data_temp, segment.x, segment.y);
+            context.put_image_data(&image_data_temp, segment.x, segment.y).unwrap();
 
-            log(format!("{:?}", segment.p.current_rotation).as_str());
             if rotated_piece.current_rotation != 0 {
                 result.completed = false;
             }
@@ -255,10 +263,11 @@ pub fn rotate_segment(
 
 #[wasm_bindgen]
 pub async fn sleep(delay: i32) {
-    let mut cb = |resolve: js_sys::Function, reject: js_sys::Function| {
+    let mut cb = |resolve: js_sys::Function, _reject: js_sys::Function| {
         web_sys::window()
             .unwrap()
-            .set_timeout_with_callback_and_timeout_and_arguments_0(&resolve, delay);};
+            .set_timeout_with_callback_and_timeout_and_arguments_0(&resolve, delay)
+            .unwrap();};
 
     let p = js_sys::Promise::new(&mut cb);
 

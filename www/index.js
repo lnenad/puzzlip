@@ -46,6 +46,7 @@ if (storedSettings.difficulty !== undefined) {
 }
 
 const resetState = () => {
+  stopTimer();
   playable = false
   timer = null
   timeInterval = null
@@ -257,7 +258,12 @@ document
   .addEventListener("click", setCategory.bind(null, "nature"));
 document
   .getElementById("nsfwCategory")
-  .addEventListener("click", setCategory.bind(null, "nsfw"));
+  .addEventListener("click", () => {
+    const legal = confirm("Please confirm if you are 18+");
+    if (legal) {
+      setCategory("nsfw");
+    }
+  });
 document
   .getElementById("illustrationsCategory")
   .addEventListener("click", setCategory.bind(null, "illustrations"));

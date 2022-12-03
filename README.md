@@ -38,3 +38,6 @@ Please take a look at our [contributing](https://github.com/lnenad/puzzlip/blob/
 #### Pending Features
 - Saving the puzzle image
 - Generating a full puzzle piece (with the side thingies) and exporting to a CAD format for printing
+
+## Attribution
+- https://simplecss.org for easy styling
