@@ -95,6 +95,7 @@ const newPuzzle = async (image) => {
   moves = 0;
   score = 0;
 
+  document.getElementById("imageURL").innerText = grid.image_url;
   document.getElementById("idealMoves").innerText = grid.ideal_moves;
 
   const clickHandler = (direction, event) => {

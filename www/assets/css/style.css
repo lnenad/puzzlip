@@ -43,6 +43,12 @@
     height: 100%;
 }
 
+#imageURL {
+    display: block;
+    text-align: center;
+    font-size: 0.7em;
+}
+
 .controlsContainer {
     display: flex;
 }
@@ -271,7 +277,7 @@ input[type=range]::-webkit-slider-thumb {
 
 .modal__close {
     position: absolute;
-    top: 10px;
+    top: 0px;
     right: 10px;
     border: none;
     outline: none;
